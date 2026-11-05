@@ -1,0 +1,20 @@
+{
+  "name": "not-just-story-checklist",
+  "version": "2.0.0",
+  "description": "Production and shooting checklist with real-time cross-device sync, take logger, and department filters",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "filmmaking",
+    "checklist",
+    "production",
+    "sync",
+    "vercel"
+  ],
+  "author": "Not Just Story Production",
+  "license": "MIT"
+}

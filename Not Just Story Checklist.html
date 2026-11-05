@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Not Just Story — Cinema Production Suite & Shooting Checklist</title>
+  <meta name="description" content="Cinematic production shooting checklist with real-time multi-device sync, take logger, slate timer, and department filters.">
+  <meta name="theme-color" content="#0d1117">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <div class="top-bar">
+        <div class="brand">
+          <div class="brand-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
+          </div>
+          <div class="brand-meta">
+            <div class="kicker">
+              <span>Shooting Checklist</span>
+              <span class="live-pill" id="sync-status-pill">
+                <span class="live-dot" id="sync-status-dot"></span>
+                <span id="sync-status-text">Connecting...</span>
+              </span>
+            </div>
+            <h1>Not Just Story</h1>
+          </div>
+        </div>
+        <div class="head-actions">
+          <button class="btn-icon" id="btn-sync-modal" title="Sync devices and share QR code" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+          </button>
+          <button class="btn-icon" id="btn-activity-drawer" title="Live crew activity feed" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </button>
+          <button class="btn-icon" id="btn-sound-toggle" title="Toggle slate sound FX" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          </button>
+          <button class="btn-icon" id="theme-toggle" title="Toggle dark/light theme" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="progress-section">
+        <div class="progress-info">
+          <div class="progress-labels">
+            <span class="progress-title">Overall production progress</span>
+            <span class="progress-stats"><span id="done-count">0</span> / <span id="total-count">0</span> ticked</span>
+          </div>
+          <div class="bar-wrap">
+            <div class="bar-fill" id="bar-fill"></div>
+          </div>
+        </div>
+        <div class="radial-score">
+          <svg viewBox="0 0 36 36">
+            <circle class="radial-bg" cx="18" cy="18" r="16"></circle>
+            <circle class="radial-meter" id="radial-meter" cx="18" cy="18" r="16"></circle>
+          </svg>
+          <span class="radial-text" id="radial-pct">0%</span>
+        </div>
+      </div>
+
+      <nav class="nav-row">
+        <div class="tabs" role="tablist" id="tabs"></div>
+      </nav>
+
+      <div class="dept-strip" id="dept-strip"></div>
+
+      <div class="toolbar">
+        <div class="tool-group">
+          <div class="search-trigger" id="search-trigger" role="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <span>Search shots, gear, props...</span>
+            <span class="kbd">Ctrl K</span>
+          </div>
+          <button class="btn" id="btn-hide-done" type="button" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+            <span>Hide ticked</span>
+          </button>
+        </div>
+        <div class="tool-group">
+          <button class="btn" id="btn-reset" type="button">Reset ticks</button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main"></main>
+
+    <footer class="foot">
+      <div>Not Just Story Shooting Checklist &mdash; Multi-Device Cloud Synced</div>
+      <div class="foot-links">
+        <button class="foot-link" onclick="window.print()">Print Shot List</button>
+        <span>&bull;</span>
+        <button class="foot-link" onclick="openSyncModal()">Device Sync Settings</button>
+        <span>&bull;</span>
+        <button class="foot-link" onclick="openSearchModal()">Quick Search</button>
+      </div>
+    </footer>
+  </div>
+
+  <div class="modal-backdrop" id="sync-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+          <span>Multi-Device Sync & Room Settings</span>
+        </div>
+        <button class="btn-icon" id="sync-modal-close" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="qr-container">
+          <div id="sync-qr-box"></div>
+          <div class="qr-caption">Scan with phone camera to sync this checklist on set</div>
+        </div>
+        <div>
+          <label class="input-label" for="sync-share-link">Shareable Room Link</label>
+          <div class="share-row">
+            <input type="text" id="sync-share-link" class="text-input" readonly>
+            <button class="btn" id="sync-copy-btn" type="button">Copy Link</button>
+          </div>
+        </div>
+        <div>
+          <label class="input-label" for="sync-room-input">Room Code / Project ID</label>
+          <input type="text" id="sync-room-input" class="text-input" placeholder="e.g. natal-2027">
+        </div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+          <div>
+            <label class="input-label" for="sync-user-input">Your Name</label>
+            <input type="text" id="sync-user-input" class="text-input" placeholder="e.g. Daryl">
+          </div>
+          <div>
+            <label class="input-label" for="sync-role-select">Your Role</label>
+            <select id="sync-role-select" class="text-input">
+              <option value="direction">Director</option>
+              <option value="camera">DOP / Camera</option>
+              <option value="sound">Sound Recordist</option>
+              <option value="lighting">Gaffer / Grip</option>
+              <option value="art">Art & Props</option>
+              <option value="cast">Cast</option>
+              <option value="production">Production / Runner</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" id="sync-modal-save" type="button" style="background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600;">Save & Connect</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="take-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          <span id="take-modal-title">Shot Detail & Take Logger</span>
+        </div>
+        <button class="btn-icon" id="take-modal-close" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="take-modal-desc" style="font-size:14px;color:var(--fg);line-height:1.45;background:var(--surface-alt);padding:10px 14px;border-radius:6px;border:1px solid var(--line);"></div>
+        <div>
+          <label class="input-label">Logged Takes</label>
+          <div id="take-modal-list" style="display:flex;flex-direction:column;gap:6px;max-height:160px;overflow-y:auto;"></div>
+          <div style="display:flex;gap:8px;margin-top:10px;">
+            <button class="btn" id="take-modal-add" type="button">+ Log Next Take</button>
+            <button class="btn" id="take-modal-add-hero" type="button" style="border-color:var(--accent);color:var(--accent);">⭐ Mark Hero Take</button>
+          </div>
+        </div>
+        <div>
+          <label class="input-label" for="take-modal-note">Director / DOP Shot Notes</label>
+          <textarea id="take-modal-note" class="text-input" rows="3" placeholder="Add notes for the editor (e.g. good focus on take 3, bloom looks right)..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" id="take-modal-save-note" type="button" style="background:var(--cold);color:#ffffff;border-color:var(--cold);font-weight:600;">Save Note</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="search-modal">
+    <div class="modal-box search-modal-box">
+      <div class="search-input-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="search-input" class="search-input-hero" placeholder="Search shots (e.g. 3.7), props, gear, cast..." autocomplete="off">
+      </div>
+      <div class="search-results" id="search-results"></div>
+    </div>
+  </div>
+
+  <aside class="drawer" id="activity-drawer">
+    <div class="drawer-header">
+      <div class="modal-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <span>Live Set Activity</span>
+      </div>
+      <button class="btn-icon" id="activity-drawer-close" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="drawer-body" id="activity-list"></div>
+  </aside>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
