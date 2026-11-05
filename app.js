@@ -556,6 +556,17 @@ function selectSetupForInspector(itemId, code, title, dept) {
   const row = document.querySelector(`.shot-row[data-item-id="${itemId}"]`);
   if (row) row.classList.add("selected");
   updateDesktopInspector();
+  updateIpadDock();
+}
+
+function updateIpadDock() {
+  const codeEl = document.getElementById("ipad-dock-code");
+  const descEl = document.getElementById("ipad-dock-desc");
+  if (!codeEl || !descEl) return;
+  if (activeDesktopSetup) {
+    codeEl.textContent = activeDesktopSetup.code ? `[${activeDesktopSetup.code}]` : "SHOT";
+    descEl.textContent = activeDesktopSetup.title || "Selected setup";
+  }
 }
 
 function updateDesktopInspector() {
@@ -600,6 +611,7 @@ function updateDesktopInspector() {
       });
     }
   }
+  updateIpadDock();
 }
 
 function renderMain() {
@@ -1495,6 +1507,25 @@ function initEventHandlers() {
   const inspSave = document.getElementById("inspector-btn-save-note");
   if (inspSave) {
     inspSave.addEventListener("click", saveShotNote);
+  }
+
+  const ipadAdd = document.getElementById("ipad-btn-add-take");
+  if (ipadAdd) {
+    ipadAdd.addEventListener("click", () => logNewTake(false));
+  }
+
+  const ipadHero = document.getElementById("ipad-btn-hero-take");
+  if (ipadHero) {
+    ipadHero.addEventListener("click", () => logNewTake(true));
+  }
+
+  const ipadOpen = document.getElementById("ipad-btn-open-take");
+  if (ipadOpen) {
+    ipadOpen.addEventListener("click", () => {
+      if (activeDesktopSetup) {
+        openTakeModal(activeDesktopSetup.itemId, activeDesktopSetup.code || "SHOT", activeDesktopSetup.title || "");
+      }
+    });
   }
 
   const actTrigger = document.getElementById("btn-activity-drawer");

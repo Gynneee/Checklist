@@ -59,6 +59,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
@@ -76,8 +77,9 @@ body {
   color: var(--ink-primary);
   font: 13px/1.5 var(--font-body);
   min-height: 100vh;
-  padding-bottom: 40px;
+  padding-bottom: max(40px, env(safe-area-inset-bottom, 20px));
   -webkit-font-smoothing: antialiased;
+  touch-action: manipulation;
 }
 
 body.fullscreen-mode {
@@ -90,6 +92,7 @@ button {
   border: none;
   background: none;
   cursor: pointer;
+  touch-action: manipulation;
 }
 
 input, textarea, select {
@@ -101,7 +104,7 @@ input, textarea, select {
   width: 100%;
   max-width: 1720px;
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 0 max(16px, env(safe-area-inset-right, 16px)) 0 max(16px, env(safe-area-inset-left, 16px));
 }
 
 .cine-header {
@@ -216,7 +219,7 @@ input, textarea, select {
   background: var(--bg-panel);
   border: 1px solid var(--line-hair);
   border-radius: var(--radius-sharp);
-  padding: 4px 8px;
+  padding: 5px 9px;
   color: var(--ink-secondary);
   font: 600 10px/1.2 var(--font-mono);
   letter-spacing: 0.08em;
@@ -225,12 +228,17 @@ input, textarea, select {
   align-items: center;
   gap: 5px;
   transition: all 0.12s ease;
+  min-height: 28px;
 }
 
 .btn-engraved:hover {
   background: var(--bg-hover);
   color: var(--ink-primary);
   border-color: var(--line-strong);
+}
+
+.btn-engraved:active {
+  transform: scale(0.97);
 }
 
 .btn-engraved.active {
@@ -395,6 +403,7 @@ h1.slate-title {
   scrollbar-width: none;
   background: var(--bg-slate);
   border-bottom: 1px solid var(--line-hair);
+  -webkit-overflow-scrolling: touch;
 }
 
 .slate-tabs::-webkit-scrollbar {
@@ -405,7 +414,7 @@ h1.slate-title {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 9px 14px;
+  padding: 10px 15px;
   background: transparent;
   border-bottom: 2px solid transparent;
   font: 700 13px/1 var(--font-display);
@@ -414,6 +423,7 @@ h1.slate-title {
   color: var(--ink-tertiary);
   transition: all 0.12s ease;
   white-space: nowrap;
+  min-height: 40px;
 }
 
 .cine-tab:hover {
@@ -452,10 +462,11 @@ h1.slate-title {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  padding: 7px 0;
+  padding: 8px 0;
   border-bottom: 1px solid var(--line-hair);
   overflow-x: auto;
   scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
 
 .slate-filter-bar::-webkit-scrollbar {
@@ -464,21 +475,24 @@ h1.slate-title {
 
 .dept-chips {
   display: flex;
-  gap: 4px;
+  gap: 5px;
   flex-shrink: 0;
 }
 
 .dept-pill {
-  font: 700 9.5px/1 var(--font-mono);
+  font: 700 10px/1 var(--font-mono);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 5px 8px;
+  padding: 6px 10px;
   border-radius: var(--radius-sharp);
   background: var(--bg-panel);
   border: 1px solid var(--line-hair);
   color: var(--ink-tertiary);
   transition: all 0.12s ease;
   white-space: nowrap;
+  min-height: 30px;
+  display: inline-flex;
+  align-items: center;
 }
 
 .dept-pill:hover {
@@ -505,13 +519,14 @@ h1.slate-title {
   gap: 7px;
   background: var(--bg-panel);
   border: 1px solid var(--line-hair);
-  padding: 4px 9px;
+  padding: 6px 10px;
   border-radius: var(--radius-sharp);
   color: var(--ink-tertiary);
   font: 500 11px/1 var(--font-mono);
   letter-spacing: 0.05em;
   cursor: pointer;
   transition: all 0.12s ease;
+  min-height: 30px;
 }
 
 .search-command-btn:hover {
@@ -590,7 +605,7 @@ h1.slate-title {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 9px 12px;
+  padding: 10px 12px;
   background: var(--bg-surface);
   border-bottom: 1px solid var(--line-hair);
   font: 700 11px/1 var(--font-mono);
@@ -623,7 +638,7 @@ h1.slate-title {
   align-items: center;
   justify-content: space-between;
   font: 11px/1.3 var(--font-mono);
-  padding: 4px 0;
+  padding: 5px 0;
   border-bottom: 1px dashed var(--line-hair);
 }
 
@@ -653,14 +668,14 @@ h1.slate-title {
 .quick-phase-nav {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
 }
 
 .quick-phase-btn {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 7px 10px;
+  padding: 9px 10px;
   border-radius: var(--radius-sharp);
   border: 1px solid transparent;
   font: 700 12px/1 var(--font-display);
@@ -668,6 +683,7 @@ h1.slate-title {
   text-transform: uppercase;
   color: var(--ink-tertiary);
   transition: all 0.12s ease;
+  min-height: 36px;
 }
 
 .quick-phase-btn:hover {
@@ -717,11 +733,12 @@ h1.slate-title {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 5px 8px;
+  padding: 6px 9px;
   background: var(--bg-slate);
   border: 1px solid var(--line-hair);
   border-radius: var(--radius-sharp);
   font: 700 11px/1 var(--font-mono);
+  min-height: 32px;
 }
 
 .take-hero-star {
@@ -733,6 +750,12 @@ h1.slate-title {
   grid-template-columns: 1fr 1fr;
   gap: 6px;
   margin-top: 4px;
+}
+
+.active-setup-actions .btn-engraved {
+  min-height: 36px;
+  justify-content: center;
+  font-size: 11px;
 }
 
 .active-setup-notes-area {
@@ -803,12 +826,13 @@ h1.slate-title {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 11px 16px;
+  padding: 12px 16px;
   background: var(--bg-panel);
   cursor: pointer;
   user-select: none;
   border-left: 3px solid transparent;
   transition: all 0.12s ease;
+  min-height: 48px;
 }
 
 .cine-card > summary::-webkit-details-marker {
@@ -891,7 +915,7 @@ h1.slate-title {
   display: flex;
   gap: 12px;
   align-items: flex-start;
-  padding: 9px 16px;
+  padding: 10px 16px;
   background: rgba(56, 178, 172, 0.06);
   border-bottom: 1px solid var(--line-hair);
   font-size: 12px;
@@ -922,15 +946,16 @@ h1.slate-title {
 .shot-row {
   position: relative;
   display: grid;
-  grid-template-columns: 24px minmax(0, 1fr) auto;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
   gap: 12px;
   align-items: start;
-  padding: 10px 16px;
+  padding: 12px 16px;
   border-bottom: 1px solid var(--line-hair);
   background: var(--bg-panel);
   cursor: pointer;
   transition: background 0.12s ease;
   user-select: none;
+  min-height: 48px;
 }
 
 .shot-row:last-child {
@@ -938,7 +963,7 @@ h1.slate-title {
 }
 
 .shot-row.has-code {
-  grid-template-columns: 24px 44px minmax(0, 1fr) auto;
+  grid-template-columns: 28px 46px minmax(0, 1fr) auto;
 }
 
 .shot-row:hover {
@@ -953,17 +978,17 @@ h1.slate-title {
 .shot-row input[type="checkbox"] {
   position: absolute;
   opacity: 0;
-  width: 24px;
-  height: 24px;
-  left: 16px;
-  top: 9px;
+  width: 44px;
+  height: 44px;
+  left: 6px;
+  top: 2px;
   cursor: pointer;
   z-index: 2;
 }
 
 .tally-box {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   border: 1.5px solid var(--line-strong);
   border-radius: 3px;
   background: var(--bg-surface);
@@ -976,8 +1001,8 @@ h1.slate-title {
 }
 
 .tally-box svg {
-  width: 12px;
-  height: 12px;
+  width: 13px;
+  height: 13px;
   color: #0b0d0f;
   transform: scale(0);
   transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -994,7 +1019,7 @@ h1.slate-title {
 }
 
 .shot-code-tag {
-  font: 700 13px/1.5 var(--font-mono);
+  font: 700 13px/1.6 var(--font-mono);
   color: var(--cine-cyan);
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.04em;
@@ -1006,7 +1031,7 @@ h1.slate-title {
 }
 
 .shot-text {
-  font-size: 13.5px;
+  font-size: 14px;
   line-height: 1.45;
   color: var(--ink-primary);
 }
@@ -1033,7 +1058,7 @@ h1.slate-title {
   font: 700 9px/1 var(--font-mono);
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 2px 6px;
+  padding: 3px 6px;
   border-radius: 2px;
   background: var(--bg-surface);
   border: 1px solid var(--line-hair);
@@ -1059,8 +1084,8 @@ h1.slate-title {
 }
 
 .btn-shot-action {
-  width: 26px;
-  height: 26px;
+  width: 32px;
+  height: 32px;
   border-radius: var(--radius-sharp);
   border: 1px solid transparent;
   display: flex;
@@ -1077,8 +1102,8 @@ h1.slate-title {
 }
 
 .btn-shot-action svg {
-  width: 13px;
-  height: 13px;
+  width: 14px;
+  height: 14px;
 }
 
 .hide-done .shot-row.done {
@@ -1094,12 +1119,13 @@ h1.slate-title {
 
 .dit-cell {
   background: var(--bg-panel);
-  padding: 12px 14px;
+  padding: 13px 15px;
   display: flex;
   flex-direction: column;
   gap: 4px;
   cursor: pointer;
   transition: background 0.12s ease;
+  min-height: 52px;
 }
 
 .dit-cell:hover {
@@ -1129,9 +1155,10 @@ h1.slate-title {
   display: grid;
   grid-template-columns: 32px minmax(0, 1fr);
   gap: 12px;
-  padding: 12px 16px;
+  padding: 13px 16px;
   border-bottom: 1px solid var(--line-hair);
   align-items: center;
+  min-height: 48px;
 }
 
 .order-step:last-child {
@@ -1155,6 +1182,10 @@ h1.slate-title {
 .order-step-txt {
   font-size: 13.5px;
   color: var(--ink-primary);
+}
+
+.ipad-docked-slate {
+  display: none;
 }
 
 .slate-footer {
@@ -1276,7 +1307,7 @@ h1.slate-title {
 
 .slate-input {
   width: 100%;
-  padding: 9px 12px;
+  padding: 10px 12px;
   border-radius: var(--radius-sharp);
   background: var(--bg-slate);
   border: 1px solid var(--line-hair);
@@ -1394,8 +1425,8 @@ h1.slate-title {
 
 .toast-container {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 24px;
+  right: 24px;
   z-index: 150;
   display: flex;
   flex-direction: column;
@@ -1409,7 +1440,7 @@ h1.slate-title {
   border: 1px solid var(--line-strong);
   border-left: 3px solid var(--cine-amber);
   color: var(--ink-primary);
-  padding: 8px 14px;
+  padding: 9px 15px;
   border-radius: var(--radius-sharp);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
   font: 600 12px/1.3 var(--font-mono);
@@ -1480,11 +1511,12 @@ h1.slate-title {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 8px 12px;
+  padding: 9px 12px;
   border-radius: var(--radius-sharp);
   cursor: pointer;
   transition: background 0.12s ease;
   font-family: var(--font-mono);
+  min-height: 38px;
 }
 
 .search-result-row:hover, .search-result-row.highlighted {
@@ -1519,20 +1551,33 @@ h1.slate-title {
   text-overflow: ellipsis;
 }
 
-@media (max-width: 1200px) {
+@media (min-width: 901px) and (max-width: 1280px) {
   .dit-console-grid {
-    grid-template-columns: 240px 1fr;
+    grid-template-columns: 310px 1fr;
+    gap: 14px;
+  }
+  .dit-console-left {
+    display: none;
   }
   .dit-console-right {
-    display: none;
+    display: flex;
+    position: sticky;
+    top: 175px;
+  }
+  .slate-specs-block {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 6px 10px;
+  }
+  .shot-row {
+    padding: 13px 16px;
   }
 }
 
-@media (max-width: 900px) {
+@media (min-width: 601px) and (max-width: 900px) {
   .dit-console-grid {
     grid-template-columns: 1fr;
   }
-  .dit-console-left {
+  .dit-console-left, .dit-console-right {
     display: none;
   }
   .slate-specs-block {
@@ -1544,20 +1589,137 @@ h1.slate-title {
   .hazard-stripes {
     display: none;
   }
+  .shot-row {
+    padding: 14px 18px;
+  }
   .shot-row.has-code {
-    grid-template-columns: 24px 38px minmax(0, 1fr) auto;
+    grid-template-columns: 28px 46px minmax(0, 1fr) auto;
+  }
+  .shot-text {
+    font-size: 14.5px;
+  }
+  .dit-preset-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .ipad-docked-slate {
+    display: flex;
+    position: fixed;
+    bottom: max(12px, env(safe-area-inset-bottom, 12px));
+    left: max(16px, env(safe-area-inset-left, 16px));
+    right: max(16px, env(safe-area-inset-right, 16px));
+    background: rgba(18, 21, 24, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-panel);
+    padding: 10px 14px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    z-index: 55;
+  }
+  .ipad-dock-info {
+    min-width: 0;
+    flex: 1;
+  }
+  .ipad-dock-code {
+    font: 800 15px/1 var(--font-mono);
+    color: var(--cine-cyan);
+    letter-spacing: 0.06em;
+  }
+  .ipad-dock-desc {
+    font-size: 12px;
+    color: var(--ink-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 2px;
+  }
+  .ipad-dock-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  .btn-ipad-action {
+    background: var(--bg-surface);
+    border: 1px solid var(--line-hair);
+    color: var(--ink-primary);
+    padding: 8px 12px;
+    border-radius: var(--radius-sharp);
+    font: 700 11px/1 var(--font-mono);
+    letter-spacing: 0.08em;
+    min-height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .btn-ipad-action:active {
+    transform: scale(0.96);
+  }
+  .btn-ipad-action.hero {
+    background: var(--cine-amber);
+    color: #0b0d0f;
+    border-color: var(--cine-amber);
   }
 }
 
 @media (max-width: 600px) {
+  .dit-console-grid {
+    grid-template-columns: 1fr;
+  }
+  .dit-console-left, .dit-console-right {
+    display: none;
+  }
   h1.slate-title {
     font-size: 22px;
   }
   .strip-cam-info {
     display: none;
   }
+  .slate-specs-block {
+    display: none;
+  }
+  .hazard-stripes {
+    display: none;
+  }
   .dit-preset-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .ipad-docked-slate {
+    display: flex;
+    position: fixed;
+    bottom: max(8px, env(safe-area-inset-bottom, 8px));
+    left: max(10px, env(safe-area-inset-left, 10px));
+    right: max(10px, env(safe-area-inset-right, 10px));
+    background: rgba(18, 21, 24, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-panel);
+    padding: 8px 10px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    z-index: 55;
+  }
+  .ipad-dock-code {
+    font: 800 14px/1 var(--font-mono);
+    color: var(--cine-cyan);
+  }
+  .ipad-dock-desc {
+    font-size: 11px;
+    color: var(--ink-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .btn-ipad-action {
+    padding: 6px 9px;
+    font-size: 10px;
+    min-height: 34px;
   }
 }
 
@@ -1567,7 +1729,7 @@ h1.slate-title {
     color: #000000 !important;
     padding: 0 !important;
   }
-  .cine-header, .slate-filter-bar, .slate-footer, .dit-console-left, .dit-console-right, .btn-shot-action, .modal-backdrop, .drawer, .toast-container {
+  .cine-header, .slate-filter-bar, .slate-footer, .dit-console-left, .dit-console-right, .ipad-docked-slate, .btn-shot-action, .modal-backdrop, .drawer, .toast-container {
     display: none !important;
   }
   .dit-console-grid {

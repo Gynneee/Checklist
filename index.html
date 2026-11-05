@@ -3,11 +3,15 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
   <title>Cinema Production Slate & DIT Monitoring Station</title>
   <meta name="description"
     content="Cinematic production shooting slate and DIT monitoring station with real-time multi-device sync, take logger, and department filters.">
   <meta name="theme-color" content="#0b0d0f">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Not Just Story">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet"
@@ -27,7 +31,7 @@
           </div>
           <div class="strip-cam-info">
             CAM: <span>SONY a6700</span> &bull; FORMAT: <span>4K 23.98P S-LOG3</span> &bull; LUT: <span>REC.709</span>
-            &bull; MONITOR: <span>DIT CART 01</span>
+            &bull; MONITOR: <span>IPAD FIELD 01</span>
           </div>
         </div>
         <div class="strip-actions">
@@ -308,6 +312,18 @@
           </div>
         </div>
       </aside>
+    </div>
+
+    <div class="ipad-docked-slate" id="ipad-dock-bar">
+      <div class="ipad-dock-info">
+        <div class="ipad-dock-code" id="ipad-dock-code">3.7</div>
+        <div class="ipad-dock-desc" id="ipad-dock-desc">Select shot to log take</div>
+      </div>
+      <div class="ipad-dock-actions">
+        <button class="btn-ipad-action" id="ipad-btn-add-take" type="button">+ TAKE</button>
+        <button class="btn-ipad-action hero" id="ipad-btn-hero-take" type="button">⭐ HERO</button>
+        <button class="btn-ipad-action" id="ipad-btn-open-take" type="button">SLATE</button>
+      </div>
     </div>
 
     <footer class="slate-footer">
