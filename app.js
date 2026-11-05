@@ -55,6 +55,15 @@ function startSlateTimecode() {
   requestAnimationFrame(update);
 }
 
+function updateMonitorStatus() {
+  const monitorStatus = document.getElementById("monitor-status");
+  if (!monitorStatus) return;
+
+  const isIpad = /iPad/i.test(navigator.userAgent) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  monitorStatus.textContent = isIpad ? "IPAD FIELD 01" : "MONITOR FIELD 01";
+}
+
 function initAudio() {
   if (!audioCtx && typeof window !== "undefined") {
     const AudioContextClass = window.AudioContext || window.webkitAudioContext;
@@ -1618,6 +1627,8 @@ function startSyncLoop() {
 function initApp() {
   loadLocalStorage();
   applyTheme(settings.theme);
+  updateMonitorStatus();
+  window.addEventListener("resize", updateMonitorStatus);
   startSlateTimecode();
   initBroadcastChannel();
   initMqttRealtime();

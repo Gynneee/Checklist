@@ -3,8 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Cinema Production Slate & DIT Monitoring Station</title>
   <meta name="description"
     content="Cinematic production shooting slate and DIT monitoring station with real-time multi-device sync, take logger, and department filters.">
@@ -30,8 +29,9 @@
             <span id="tally-text">REC SYNC</span>
           </div>
           <div class="strip-cam-info">
-            CAM: <span>SONY a6700</span> &bull; FORMAT: <span>4K 23.98P S-LOG3</span> &bull; LUT: <span>REC.709</span>
-            &bull; MONITOR: <span>IPAD FIELD 01</span>
+            <span class="strip-camera-details">CAM: <span>SONY a6700</span> &bull; FORMAT: <span>4K 23.98P S-LOG3</span>
+              &bull; LUT: <span>REC.709</span></span>
+            <span class="strip-monitor-prefix">&bull; MONITOR: </span><span id="monitor-status">MONITOR FIELD 01</span>
           </div>
         </div>
         <div class="strip-actions">
@@ -167,11 +167,11 @@
             </div>
             <div class="telemetry-row">
               <span class="telemetry-key">RECORD CODEC</span>
-              <span class="telemetry-val">XAVC S-I 4K 10-bit</span>
+              <span class="telemetry-val">XAVC S 4K 10-bit</span>
             </div>
             <div class="telemetry-row">
               <span class="telemetry-key">PICTURE PROFILE</span>
-              <span class="telemetry-val highlight">PP8 S-Log3</span>
+              <span class="telemetry-val highlight">S-Log3 & S-Cinetone</span>
             </div>
             <div class="telemetry-row">
               <span class="telemetry-key">COLOR SPACE</span>

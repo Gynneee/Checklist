@@ -459,24 +459,19 @@ h1.slate-title {
 
 .slate-filter-bar {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: 8px;
   padding: 8px 0;
   border-bottom: 1px solid var(--line-hair);
-  overflow-x: auto;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-}
-
-.slate-filter-bar::-webkit-scrollbar {
-  display: none;
 }
 
 .dept-chips {
   display: flex;
+  flex-wrap: wrap;
   gap: 5px;
-  flex-shrink: 0;
+  min-width: 0;
 }
 
 .dept-pill {
@@ -509,8 +504,9 @@ h1.slate-title {
 .slate-sub-tools {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
-  flex-shrink: 0;
+  min-width: 0;
 }
 
 .search-command-btn {
@@ -550,21 +546,16 @@ h1.slate-title {
 
 .dit-console-grid {
   display: grid;
-  grid-template-columns: 280px 1fr 340px;
+  grid-template-columns: minmax(220px, 0.75fr) minmax(0, 1.6fr) minmax(280px, 0.95fr);
   gap: 16px;
   align-items: start;
   margin-top: 14px;
 }
 
 .dit-console-left {
-  position: sticky;
-  top: 175px;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  max-height: calc(100vh - 195px);
-  overflow-y: auto;
-  scrollbar-width: thin;
 }
 
 .dit-console-center {
@@ -572,25 +563,9 @@ h1.slate-title {
 }
 
 .dit-console-right {
-  position: sticky;
-  top: 175px;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  max-height: calc(100vh - 195px);
-  overflow-y: auto;
-  scrollbar-width: thin;
-}
-
-.dit-console-left::-webkit-scrollbar,
-.dit-console-right::-webkit-scrollbar {
-  width: 4px;
-}
-
-.dit-console-left::-webkit-scrollbar-thumb,
-.dit-console-right::-webkit-scrollbar-thumb {
-  background: var(--line-hair);
-  border-radius: 2px;
 }
 
 .console-panel {
@@ -1553,20 +1528,42 @@ h1.slate-title {
 
 @media (min-width: 901px) and (max-width: 1280px) {
   .dit-console-grid {
-    grid-template-columns: 310px 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      "left right"
+      "center center";
     gap: 14px;
   }
+  .dit-console-center {
+    grid-area: center;
+  }
   .dit-console-left {
-    display: none;
+    grid-area: left;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    align-content: start;
   }
   .dit-console-right {
-    display: flex;
-    position: sticky;
-    top: 175px;
+    grid-area: right;
   }
   .slate-specs-block {
     grid-template-columns: repeat(2, 1fr);
     padding: 6px 10px;
+  }
+  .slate-main-bar {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .slate-clapper-block {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .slate-specs-block {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .slate-gauge-block {
+    grid-column: 2;
+    grid-row: 1 / span 2;
   }
   .shot-row {
     padding: 13px 16px;
@@ -1575,19 +1572,44 @@ h1.slate-title {
 
 @media (min-width: 601px) and (max-width: 900px) {
   .dit-console-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      "left right"
+      "center center";
+    gap: 14px;
   }
-  .dit-console-left, .dit-console-right {
-    display: none;
+  .dit-console-center {
+    grid-area: center;
   }
-  .slate-specs-block {
-    display: none;
+  .dit-console-left {
+    grid-area: left;
+    display: flex;
+    min-width: 0;
+  }
+  .dit-console-right {
+    grid-area: right;
+    display: flex;
+    min-width: 0;
+  }
+  .console-panel {
+    min-width: 0;
   }
   .slate-main-bar {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: minmax(0, 1fr) auto;
   }
-  .hazard-stripes {
-    display: none;
+  .slate-clapper-block {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .slate-specs-block {
+    grid-column: 1;
+    grid-row: 2;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 6px 10px;
+  }
+  .slate-gauge-block {
+    grid-column: 2;
+    grid-row: 1 / span 2;
   }
   .shot-row {
     padding: 14px 18px;
@@ -1618,6 +1640,9 @@ h1.slate-title {
     gap: 12px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
     z-index: 55;
+  }
+  body {
+    padding-bottom: max(104px, calc(env(safe-area-inset-bottom, 0px) + 92px));
   }
   .ipad-dock-info {
     min-width: 0;
@@ -1667,22 +1692,72 @@ h1.slate-title {
 
 @media (max-width: 600px) {
   .dit-console-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "center"
+      "left"
+      "right";
+    gap: 12px;
   }
-  .dit-console-left, .dit-console-right {
-    display: none;
+  .dit-console-center {
+    grid-area: center;
+  }
+  .dit-console-left {
+    grid-area: left;
+    display: flex;
+  }
+  .dit-console-right {
+    grid-area: right;
+    display: flex;
   }
   h1.slate-title {
     font-size: 22px;
   }
   .strip-cam-info {
+    display: block;
+    font-size: 9px;
+    line-height: 1.4;
+  }
+  .strip-camera-details,
+  .strip-monitor-prefix {
     display: none;
   }
   .slate-specs-block {
-    display: none;
+    grid-column: 1;
+    grid-row: 2;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 6px 10px;
   }
   .hazard-stripes {
     display: none;
+  }
+  .slate-top-strip {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .strip-actions {
+    flex-wrap: wrap;
+  }
+  .slate-main-bar {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+  }
+  .slate-clapper-block {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .slate-gauge-block {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+  .slate-filter-bar {
+    align-items: stretch;
+  }
+  .dept-chips {
+    flex: 1 1 100%;
+  }
+  .slate-sub-tools {
+    flex: 1 1 100%;
   }
   .dit-preset-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -1705,6 +1780,9 @@ h1.slate-title {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
     z-index: 55;
   }
+  body {
+    padding-bottom: max(100px, calc(env(safe-area-inset-bottom, 0px) + 88px));
+  }
   .ipad-dock-code {
     font: 800 14px/1 var(--font-mono);
     color: var(--cine-cyan);
@@ -1720,6 +1798,18 @@ h1.slate-title {
     padding: 6px 9px;
     font-size: 10px;
     min-height: 34px;
+  }
+  .telemetry-row {
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .telemetry-key {
+    flex: 0 1 45%;
+  }
+  .telemetry-val {
+    flex: 0 1 55%;
+    text-align: right;
+    overflow-wrap: anywhere;
   }
 }
 
