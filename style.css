@@ -410,6 +410,18 @@ h1.slate-title {
   display: none;
 }
 
+.phase-controls-summary {
+  display: none;
+}
+
+.phase-controls:not([open]) > :not(summary) {
+  display: none;
+}
+
+.phase-controls[open] > .phase-controls-summary {
+  border-bottom: 1px solid var(--line-hair);
+}
+
 .cine-tab {
   display: flex;
   align-items: center;
@@ -1526,12 +1538,47 @@ h1.slate-title {
   text-overflow: ellipsis;
 }
 
+@media (max-width: 1280px) {
+  .phase-controls-summary {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 8px 10px;
+    color: var(--ink-secondary);
+    font: 700 10px/1 var(--font-mono);
+    letter-spacing: 0.1em;
+    list-style: none;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .phase-controls-summary::-webkit-details-marker {
+    display: none;
+  }
+  .phase-controls-current {
+    margin-left: auto;
+    color: var(--cine-amber);
+  }
+  .phase-controls-summary svg {
+    width: 14px;
+    height: 14px;
+    color: var(--ink-tertiary);
+    transition: transform 0.15s ease;
+  }
+  .phase-controls[open] .phase-controls-summary svg {
+    transform: rotate(180deg);
+  }
+  .phase-controls[open] .slate-tabs {
+    flex-wrap: wrap;
+  }
+}
+
 @media (min-width: 901px) and (max-width: 1280px) {
   .dit-console-grid {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     grid-template-areas:
-      "left right"
-      "center center";
+      "center center"
+      "left right";
     gap: 14px;
   }
   .dit-console-center {
@@ -1574,8 +1621,8 @@ h1.slate-title {
   .dit-console-grid {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     grid-template-areas:
-      "left right"
-      "center center";
+      "center center"
+      "left right";
     gap: 14px;
   }
   .dit-console-center {
@@ -1752,6 +1799,10 @@ h1.slate-title {
   }
   .slate-filter-bar {
     align-items: stretch;
+  }
+  .phase-controls-summary {
+    min-height: 38px;
+    padding-inline: 8px;
   }
   .dept-chips {
     flex: 1 1 100%;

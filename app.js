@@ -508,6 +508,10 @@ function renderDeptFilters() {
       document.querySelectorAll(".dept-pill").forEach((c) => c.classList.remove("active"));
       chip.classList.add("active");
       applyDeptFilter();
+      const phaseControls = document.getElementById("phase-controls");
+      if (phaseControls && window.matchMedia("(max-width: 1280px)").matches) {
+        phaseControls.open = false;
+      }
     });
 
     container.appendChild(chip);
@@ -538,6 +542,17 @@ function applyDeptFilter() {
 function switchPhase(phaseId) {
   currentPhase = phaseId;
   window.location.hash = phaseId;
+
+  const phaseControls = document.getElementById("phase-controls");
+  const phaseLabel = document.getElementById("phase-controls-current");
+  const phase = CHECKLIST_DATA.find((item) => item.id === phaseId);
+  if (phaseLabel && phase) {
+    const phasePrefixes = { prep: "01", gear: "02", day: "03", scenes: "04", wrap: "05" };
+    phaseLabel.textContent = `${phasePrefixes[phase.id] || ""} ${phase.label}`.trim();
+  }
+  if (phaseControls && window.matchMedia("(max-width: 1280px)").matches) {
+    phaseControls.open = false;
+  }
 
   document.querySelectorAll(".cine-tab").forEach((tab) => {
     const isSelected = tab.id === `tab-${phaseId}`;
@@ -1629,6 +1644,14 @@ function initApp() {
   applyTheme(settings.theme);
   updateMonitorStatus();
   window.addEventListener("resize", updateMonitorStatus);
+  const phaseControls = document.getElementById("phase-controls");
+  if (phaseControls) {
+    const compactControls = window.matchMedia("(max-width: 1280px)");
+    phaseControls.open = !compactControls.matches;
+    compactControls.addEventListener("change", (event) => {
+      phaseControls.open = !event.matches;
+    });
+  }
   startSlateTimecode();
   initBroadcastChannel();
   initMqttRealtime();
@@ -1641,6 +1664,12 @@ function initApp() {
   }
 
   renderTabs();
+  const initialPhase = CHECKLIST_DATA.find((phase) => phase.id === currentPhase);
+  const phaseLabel = document.getElementById("phase-controls-current");
+  if (phaseLabel && initialPhase) {
+    const phasePrefixes = { prep: "01", gear: "02", day: "03", scenes: "04", wrap: "05" };
+    phaseLabel.textContent = `${phasePrefixes[initialPhase.id] || ""} ${initialPhase.label}`.trim();
+  }
   renderDeptFilters();
   renderMain();
 
