@@ -446,7 +446,7 @@ const SUGGESTED_ORDER = [
 
 const CAMERA_PRESET = [
   { label: "Profile", value: "S-Log3" },
-  { label: "ISO", value: "2500" },
+  { label: "ISO", value: "800/2500" },
   { label: "Resolution", value: "4K 23.98p" },
   { label: "Slow-mo", value: "4K 60p" },
   { label: "Shutter", value: "1/48 (1/120 at 60p)" },

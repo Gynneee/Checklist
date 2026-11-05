@@ -76,7 +76,7 @@ export default async function handler(req, res) {
         takes: {},
         notes: {},
         hide: false,
-        updatedAt: Date.now()
+        updatedAt: 0
       };
     }
 
