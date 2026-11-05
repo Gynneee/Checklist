@@ -1023,7 +1023,7 @@ function setSyncStatus(status) {
   if (status === "synced") {
     tally.className = "tally-badge live";
     tallyText.textContent = "REC SYNC";
-    if (syncLabel) syncLabel.textContent = `FREQ: ${settings.room.toUpperCase()}`;
+    if (syncLabel) syncLabel.textContent = `Freq Synced`;
   } else if (status === "syncing") {
     tally.className = "tally-badge";
     tallyText.textContent = "LINKING";
