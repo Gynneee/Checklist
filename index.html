@@ -3,102 +3,257 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Not Just Story — Cinema Production Suite & Shooting Checklist</title>
-  <meta name="description" content="Cinematic production shooting checklist with real-time multi-device sync, take logger, slate timer, and department filters.">
-  <meta name="theme-color" content="#0d1117">
+  <title>Not Just Story — Cinema Production Slate & DIT Monitoring Station</title>
+  <meta name="description" content="Cinematic production shooting slate and DIT monitoring station with real-time multi-device sync, take logger, and department filters.">
+  <meta name="theme-color" content="#0b0d0f">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="wrap">
-    <header class="top">
-      <div class="top-bar">
-        <div class="brand">
-          <div class="brand-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
+  <div class="slate-container">
+    <header class="cine-header">
+      <div class="slate-top-strip">
+        <div class="strip-meta">
+          <div class="tc-clock" id="tc-clock"><span id="tc-display">00:00:00:00</span></div>
+          <div class="tally-badge live" id="tally-status">
+            <span class="tally-lamp"></span>
+            <span id="tally-text">REC SYNC</span>
           </div>
-          <div class="brand-meta">
-            <div class="kicker">
-              <span>Shooting Checklist</span>
-              <span class="live-pill" id="sync-status-pill">
-                <span class="live-dot" id="sync-status-dot"></span>
-                <span id="sync-status-text">Connecting...</span>
-              </span>
-            </div>
-            <h1>Not Just Story</h1>
+          <div class="strip-cam-info">
+            CAM: <span>SONY a6700</span> &bull; FORMAT: <span>4K 23.98P S-LOG3</span> &bull; LUT: <span>REC.709</span> &bull; MONITOR: <span>DIT CART 01</span>
           </div>
         </div>
-        <div class="head-actions">
-          <button class="btn-icon" id="btn-sync-modal" title="Sync devices and share QR code" type="button">
+        <div class="strip-actions">
+          <button class="btn-engraved" id="btn-fullscreen" title="Toggle full monitor video village view" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+            <span>FULLSCREEN</span>
+          </button>
+          <button class="btn-engraved" id="btn-sync-modal" title="Sync devices and broadcast QR code" type="button">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+            <span id="sync-btn-label">FREQ: NATAL-2027</span>
           </button>
-          <button class="btn-icon" id="btn-activity-drawer" title="Live crew activity feed" type="button">
+          <button class="btn-engraved" id="btn-activity-drawer" title="Live crew activity stream" type="button">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            <span>LOG</span>
           </button>
-          <button class="btn-icon" id="btn-sound-toggle" title="Toggle slate sound FX" type="button">
+          <button class="btn-engraved" id="btn-sound-toggle" title="Toggle slate acoustic clapper sound" type="button">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+            <span>AUDIO</span>
           </button>
-          <button class="btn-icon" id="theme-toggle" title="Toggle dark/light theme" type="button">
+          <button class="btn-engraved" id="theme-toggle" title="Toggle monitor high-contrast / studio mode" type="button">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <span>MONITOR</span>
           </button>
         </div>
       </div>
 
-      <div class="progress-section">
-        <div class="progress-info">
-          <div class="progress-labels">
-            <span class="progress-title">Overall production progress</span>
-            <span class="progress-stats"><span id="done-count">0</span> / <span id="total-count">0</span> ticked</span>
-          </div>
-          <div class="bar-wrap">
-            <div class="bar-fill" id="bar-fill"></div>
+      <div class="slate-main-bar">
+        <div class="slate-clapper-block">
+          <div class="hazard-stripes"></div>
+          <div class="slate-titles">
+            <div class="slate-kicker">PRODUCTION SLATE &bull; <span>NOT JUST STORY</span></div>
+            <h1 class="slate-title">Not Just Story</h1>
           </div>
         </div>
-        <div class="radial-score">
-          <svg viewBox="0 0 36 36">
-            <circle class="radial-bg" cx="18" cy="18" r="16"></circle>
-            <circle class="radial-meter" id="radial-meter" cx="18" cy="18" r="16"></circle>
-          </svg>
-          <span class="radial-text" id="radial-pct">0%</span>
+
+        <div class="slate-specs-block">
+          <div class="spec-cell">
+            <span class="spec-lbl">LENS</span>
+            <span class="spec-val">SIRUI 35 T1.2</span>
+          </div>
+          <div class="spec-cell">
+            <span class="spec-lbl">SHUTTER</span>
+            <span class="spec-val">1/48 (180°)</span>
+          </div>
+          <div class="spec-cell">
+            <span class="spec-lbl">BASE ISO</span>
+            <span class="spec-val">2500</span>
+          </div>
+          <div class="spec-cell">
+            <span class="spec-lbl">WHITE BAL</span>
+            <span class="spec-val">3800K</span>
+          </div>
+        </div>
+
+        <div class="slate-gauge-block">
+          <div class="gauge-readout">
+            <span id="done-count">0</span>/<span id="total-count">0</span>
+            <small>SHOTS</small>
+          </div>
+          <div class="gauge-sub" id="radial-pct">0% WRAPPED</div>
         </div>
       </div>
 
-      <nav class="nav-row">
-        <div class="tabs" role="tablist" id="tabs"></div>
-      </nav>
+      <div class="slate-progress-rail">
+        <div class="slate-progress-bar" id="bar-fill"></div>
+      </div>
 
-      <div class="dept-strip" id="dept-strip"></div>
+      <nav class="slate-tabs" role="tablist" id="tabs"></nav>
 
-      <div class="toolbar">
-        <div class="tool-group">
-          <div class="search-trigger" id="search-trigger" role="button">
+      <div class="slate-filter-bar">
+        <div class="dept-chips" id="dept-strip"></div>
+        <div class="slate-sub-tools">
+          <div class="search-command-btn" id="search-trigger" role="button">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <span>Search shots, gear, props...</span>
-            <span class="kbd">Ctrl K</span>
+            <span>FIND SHOT</span>
+            <span class="cine-kbd">CMD K</span>
           </div>
-          <button class="btn" id="btn-hide-done" type="button" aria-pressed="false">
+          <button class="btn-engraved" id="btn-hide-done" type="button" aria-pressed="false">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
-            <span>Hide ticked</span>
+            <span>HIDE COMPLETED</span>
           </button>
-        </div>
-        <div class="tool-group">
-          <button class="btn" id="btn-reset" type="button">Reset ticks</button>
+          <button class="btn-engraved" id="btn-reset" type="button">CLEAR TICKS</button>
         </div>
       </div>
     </header>
 
-    <main id="main"></main>
+    <div class="dit-console-grid">
+      <aside class="dit-console-left">
+        <div class="console-panel">
+          <div class="console-panel-head">
+            <span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              CAMERA TELEMETRY
+            </span>
+          </div>
+          <div class="console-panel-body">
+            <div class="telemetry-row">
+              <span class="telemetry-key">CAMERA BODY</span>
+              <span class="telemetry-val highlight">Sony a6700</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-key">RECORD CODEC</span>
+              <span class="telemetry-val">XAVC S-I 4K 10-bit</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-key">PICTURE PROFILE</span>
+              <span class="telemetry-val highlight">PP8 S-Log3</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-key">COLOR SPACE</span>
+              <span class="telemetry-val">S-Gamut3.Cine</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-key">TARGET EXPOSURE</span>
+              <span class="telemetry-val cyan">50-55% Waveform</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-key">AUDIO RESOLUTION</span>
+              <span class="telemetry-val">48 kHz / 24-bit</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-key">DIFFUSION FILTER</span>
+              <span class="telemetry-val">1/4 Black Pro-Mist</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-key">POWER SUPPLY</span>
+              <span class="telemetry-val cyan">16.8V V-Mount 94%</span>
+            </div>
+          </div>
+        </div>
 
-    <footer class="foot">
-      <div>Not Just Story Shooting Checklist &mdash; Multi-Device Cloud Synced</div>
-      <div class="foot-links">
-        <button class="foot-link" onclick="window.print()">Print Shot List</button>
+        <div class="console-panel">
+          <div class="console-panel-head">
+            <span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+              PRODUCTION STAGES
+            </span>
+          </div>
+          <div class="console-panel-body" style="padding:6px;">
+            <div class="quick-phase-nav" id="quick-phase-nav"></div>
+          </div>
+        </div>
+
+        <div class="console-panel">
+          <div class="console-panel-head">
+            <span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+              SUGGESTED SEQUENCE
+            </span>
+          </div>
+          <div class="console-panel-body" style="font-size:12px;color:var(--ink-secondary);line-height:1.45;">
+            <div>1. Home Set (Parents)</div>
+            <div>2. Scene 2 (Kevin's room, clean)</div>
+            <div>3. Scene 4 (Kevin's room, night)</div>
+            <div>4. Scene 3 (Explosion, fog, strobe)</div>
+            <div>5. Scene 1 (Window, wet glass)</div>
+            <div>6. Scene 5 (Common room CWS)</div>
+            <div>7. Drone & Night Exterior</div>
+          </div>
+        </div>
+      </aside>
+
+      <section class="dit-console-center">
+        <main class="slate-main" id="main"></main>
+      </section>
+
+      <aside class="dit-console-right">
+        <div class="console-panel" id="desktop-inspector">
+          <div class="console-panel-head">
+            <span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              ACTIVE SETUP CONTINUITY
+            </span>
+          </div>
+          <div class="console-panel-body">
+            <div class="active-setup-card">
+              <div class="active-setup-header">
+                <span class="active-setup-code" id="inspector-code">SELECT SHOT</span>
+                <span class="tag-badge" id="inspector-dept">STANDBY</span>
+              </div>
+              <div class="active-setup-title" id="inspector-title">Click any shot in the center shot list to inspect takes and record continuity notes.</div>
+              <div class="slate-field-lbl" style="margin-top:4px;">TAKES RECORDED</div>
+              <div class="active-takes-container" id="inspector-takes">
+                <div style="font-family:var(--font-mono);font-size:11px;color:var(--ink-tertiary);">No setup selected.</div>
+              </div>
+              <div class="active-setup-actions">
+                <button class="btn-engraved" id="inspector-btn-add" type="button" disabled>+ LOG TAKE</button>
+                <button class="btn-engraved active" id="inspector-btn-hero" type="button" disabled>⭐ HERO TAKE</button>
+              </div>
+              <div class="slate-field-lbl" style="margin-top:6px;">DIRECTOR / DIT NOTES</div>
+              <textarea class="active-setup-notes-area" id="inspector-notes" rows="3" placeholder="Enter notes for post-production..." disabled></textarea>
+              <button class="btn-engraved" id="inspector-btn-save-note" type="button" style="align-self:flex-end;margin-top:2px;" disabled>SAVE NOTE</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="console-panel">
+          <div class="console-panel-head">
+            <span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              LIVE CREW ACTIVITY
+            </span>
+          </div>
+          <div class="console-panel-body" style="padding:8px;max-height:220px;overflow-y:auto;" id="desktop-activity-list"></div>
+        </div>
+
+        <div class="console-panel">
+          <div class="console-panel-head">
+            <span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+              ON-SET CREW QR CODE
+            </span>
+          </div>
+          <div class="console-panel-body">
+            <div class="qr-dock-box">
+              <div id="desktop-qr-box"></div>
+              <div class="qr-dock-text">SCAN OFF LAPTOP MONITOR TO SYNC</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="slate-footer">
+      <div>NOT JUST STORY &bull; CINEMA PRODUCTION SLATE & DIT MULTI-MONITOR CONSOLE</div>
+      <div class="footer-nav">
+        <button class="footer-link" onclick="window.print()">PRINT CALL SHEET</button>
         <span>&bull;</span>
-        <button class="foot-link" onclick="openSyncModal()">Device Sync Settings</button>
+        <button class="footer-link" onclick="openSyncModal()">SYNC CREW DEVICES</button>
         <span>&bull;</span>
-        <button class="foot-link" onclick="openSearchModal()">Quick Search</button>
+        <button class="footer-link" onclick="openSearchModal()">SPOTLIGHT SEARCH</button>
       </div>
     </footer>
   </div>
@@ -108,36 +263,36 @@
       <div class="modal-header">
         <div class="modal-title">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
-          <span>Multi-Device Sync & Room Settings</span>
+          <span>WIRELESS CREW SYNC &bull; BROADCAST SLATE</span>
         </div>
-        <button class="btn-icon" id="sync-modal-close" type="button">
+        <button class="btn-shot-action" id="sync-modal-close" type="button">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
       <div class="modal-body">
-        <div class="qr-container">
+        <div class="qr-slate-box">
           <div id="sync-qr-box"></div>
-          <div class="qr-caption">Scan with phone camera to sync this checklist on set</div>
+          <div class="qr-slate-caption">SCAN WITH CAMERA TO JOIN LIVE SLATE</div>
         </div>
         <div>
-          <label class="input-label" for="sync-share-link">Shareable Room Link</label>
-          <div class="share-row">
-            <input type="text" id="sync-share-link" class="text-input" readonly>
-            <button class="btn" id="sync-copy-btn" type="button">Copy Link</button>
+          <label class="slate-field-lbl" for="sync-share-link">DIRECT SLATE LINK</label>
+          <div class="share-copy-row">
+            <input type="text" id="sync-share-link" class="slate-input" readonly>
+            <button class="btn-engraved" id="sync-copy-btn" type="button">COPY</button>
           </div>
         </div>
         <div>
-          <label class="input-label" for="sync-room-input">Room Code / Project ID</label>
-          <input type="text" id="sync-room-input" class="text-input" placeholder="e.g. natal-2027">
+          <label class="slate-field-lbl" for="sync-room-input">SET FREQUENCY / ROOM ID</label>
+          <input type="text" id="sync-room-input" class="slate-input" placeholder="e.g. natal-2027">
         </div>
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
           <div>
-            <label class="input-label" for="sync-user-input">Your Name</label>
-            <input type="text" id="sync-user-input" class="text-input" placeholder="e.g. Daryl">
+            <label class="slate-field-lbl" for="sync-user-input">CREW OPERATOR</label>
+            <input type="text" id="sync-user-input" class="slate-input" placeholder="e.g. Daryl">
           </div>
           <div>
-            <label class="input-label" for="sync-role-select">Your Role</label>
-            <select id="sync-role-select" class="text-input">
+            <label class="slate-field-lbl" for="sync-role-select">DEPARTMENT ROLE</label>
+            <select id="sync-role-select" class="slate-input">
               <option value="direction">Director</option>
               <option value="camera">DOP / Camera</option>
               <option value="sound">Sound Recordist</option>
@@ -150,7 +305,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn" id="sync-modal-save" type="button" style="background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600;">Save & Connect</button>
+        <button class="btn-engraved active" id="sync-modal-save" type="button">CONNECT FREQUENCY</button>
       </div>
     </div>
   </div>
@@ -160,40 +315,40 @@
       <div class="modal-header">
         <div class="modal-title">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-          <span id="take-modal-title">Shot Detail & Take Logger</span>
+          <span id="take-modal-title">CLAPPER SLATE &bull; SHOT CONTINUITY</span>
         </div>
-        <button class="btn-icon" id="take-modal-close" type="button">
+        <button class="btn-shot-action" id="take-modal-close" type="button">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
       <div class="modal-body">
-        <div id="take-modal-desc" style="font-size:14px;color:var(--fg);line-height:1.45;background:var(--surface-alt);padding:10px 14px;border-radius:6px;border:1px solid var(--line);"></div>
+        <div id="take-modal-desc" style="font-family:var(--font-mono);font-size:13px;color:var(--ink-primary);line-height:1.45;background:var(--bg-slate);padding:10px 14px;border-radius:var(--radius-sharp);border-left:3px solid var(--cine-amber);"></div>
         <div>
-          <label class="input-label">Logged Takes</label>
-          <div id="take-modal-list" style="display:flex;flex-direction:column;gap:6px;max-height:160px;overflow-y:auto;"></div>
-          <div style="display:flex;gap:8px;margin-top:10px;">
-            <button class="btn" id="take-modal-add" type="button">+ Log Next Take</button>
-            <button class="btn" id="take-modal-add-hero" type="button" style="border-color:var(--accent);color:var(--accent);">⭐ Mark Hero Take</button>
+          <label class="slate-field-lbl">CONTINUITY TAKES LOGGED</label>
+          <div id="take-modal-list" style="display:flex;flex-direction:column;gap:5px;max-height:150px;overflow-y:auto;"></div>
+          <div style="display:flex;gap:6px;margin-top:10px;">
+            <button class="btn-engraved" id="take-modal-add" type="button">+ LOG TAKE</button>
+            <button class="btn-engraved active" id="take-modal-add-hero" type="button">⭐ MARK HERO TAKE</button>
           </div>
         </div>
         <div>
-          <label class="input-label" for="take-modal-note">Director / DOP Shot Notes</label>
-          <textarea id="take-modal-note" class="text-input" rows="3" placeholder="Add notes for the editor (e.g. good focus on take 3, bloom looks right)..."></textarea>
+          <label class="slate-field-lbl" for="take-modal-note">DIRECTOR / DIT CONTINUITY NOTES</label>
+          <textarea id="take-modal-note" class="slate-input" rows="3" placeholder="Technical notes for editor (e.g. good bloom, focus locked on Jensen reveal)..."></textarea>
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn" id="take-modal-save-note" type="button" style="background:var(--cold);color:#ffffff;border-color:var(--cold);font-weight:600;">Save Note</button>
+        <button class="btn-engraved" id="take-modal-save-note" type="button" style="background:var(--cine-cyan);color:#0b0d0f;border-color:var(--cine-cyan);font-weight:700;">SAVE NOTE</button>
       </div>
     </div>
   </div>
 
   <div class="modal-backdrop" id="search-modal">
     <div class="modal-box search-modal-box">
-      <div class="search-input-wrap">
+      <div class="search-viewfinder">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" id="search-input" class="search-input-hero" placeholder="Search shots (e.g. 3.7), props, gear, cast..." autocomplete="off">
+        <input type="text" id="search-input" placeholder="SEARCH SHOT (e.g. 3.7), PROP, GEAR, SCRIPT CUE..." autocomplete="off">
       </div>
-      <div class="search-results" id="search-results"></div>
+      <div class="search-results-list" id="search-results"></div>
     </div>
   </div>
 
@@ -201,9 +356,9 @@
     <div class="drawer-header">
       <div class="modal-title">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        <span>Live Set Activity</span>
+        <span>CREW TALLY AUDIT STREAM</span>
       </div>
-      <button class="btn-icon" id="activity-drawer-close" type="button">
+      <button class="btn-shot-action" id="activity-drawer-close" type="button">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
@@ -215,8 +370,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/5.3.5/mqtt.min.js"></script>
   <script src="data.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
-
