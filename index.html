@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Not Just Story — Cinema Production Slate & DIT Monitoring Station</title>
-  <meta name="description" content="Cinematic production shooting slate and DIT monitoring station with real-time multi-device sync, take logger, and department filters.">
+  <title>Cinema Production Slate & DIT Monitoring Station</title>
+  <meta name="description"
+    content="Cinematic production shooting slate and DIT monitoring station with real-time multi-device sync, take logger, and department filters.">
   <meta name="theme-color" content="#0b0d0f">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <div class="slate-container">
     <header class="cine-header">
@@ -22,28 +26,51 @@
             <span id="tally-text">REC SYNC</span>
           </div>
           <div class="strip-cam-info">
-            CAM: <span>SONY a6700</span> &bull; FORMAT: <span>4K 23.98P S-LOG3</span> &bull; LUT: <span>REC.709</span> &bull; MONITOR: <span>DIT CART 01</span>
+            CAM: <span>SONY a6700</span> &bull; FORMAT: <span>4K 23.98P S-LOG3</span> &bull; LUT: <span>REC.709</span>
+            &bull; MONITOR: <span>DIT CART 01</span>
           </div>
         </div>
         <div class="strip-actions">
           <button class="btn-engraved" id="btn-fullscreen" title="Toggle full monitor video village view" type="button">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
+            </svg>
             <span>FULLSCREEN</span>
           </button>
           <button class="btn-engraved" id="btn-sync-modal" title="Sync devices and broadcast QR code" type="button">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+              <polyline points="16 6 12 2 8 6" />
+              <line x1="12" y1="2" x2="12" y2="15" />
+            </svg>
             <span id="sync-btn-label">FREQ: NATAL-2027</span>
           </button>
           <button class="btn-engraved" id="btn-activity-drawer" title="Live crew activity stream" type="button">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+            </svg>
             <span>LOG</span>
           </button>
           <button class="btn-engraved" id="btn-sound-toggle" title="Toggle slate acoustic clapper sound" type="button">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+            </svg>
             <span>AUDIO</span>
           </button>
-          <button class="btn-engraved" id="theme-toggle" title="Toggle monitor high-contrast / studio mode" type="button">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <button class="btn-engraved" id="theme-toggle" title="Toggle monitor high-contrast / studio mode"
+            type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="5" />
+              <line x1="12" y1="1" x2="12" y2="3" />
+              <line x1="12" y1="21" x2="12" y2="23" />
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+              <line x1="1" y1="12" x2="3" y2="12" />
+              <line x1="21" y1="12" x2="23" y2="12" />
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+            </svg>
             <span>MONITOR</span>
           </button>
         </div>
@@ -96,12 +123,19 @@
         <div class="dept-chips" id="dept-strip"></div>
         <div class="slate-sub-tools">
           <div class="search-command-btn" id="search-trigger" role="button">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
             <span>FIND SHOT</span>
             <span class="cine-kbd">CMD K</span>
           </div>
           <button class="btn-engraved" id="btn-hide-done" type="button" aria-pressed="false">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+              <line x1="1" y1="1" x2="23" y2="23" />
+            </svg>
             <span>HIDE COMPLETED</span>
           </button>
           <button class="btn-engraved" id="btn-reset" type="button">CLEAR TICKS</button>
@@ -114,7 +148,11 @@
         <div class="console-panel">
           <div class="console-panel-head">
             <span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3" />
+                <path
+                  d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+              </svg>
               CAMERA TELEMETRY
             </span>
           </div>
@@ -157,7 +195,11 @@
         <div class="console-panel">
           <div class="console-panel-head">
             <span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                <polyline points="2 17 12 22 22 17" />
+                <polyline points="2 12 12 17 22 12" />
+              </svg>
               PRODUCTION STAGES
             </span>
           </div>
@@ -169,7 +211,14 @@
         <div class="console-panel">
           <div class="console-panel-head">
             <span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="8" y1="6" x2="21" y2="6" />
+                <line x1="8" y1="12" x2="21" y2="12" />
+                <line x1="8" y1="18" x2="21" y2="18" />
+                <line x1="3" y1="6" x2="3.01" y2="6" />
+                <line x1="3" y1="12" x2="3.01" y2="12" />
+                <line x1="3" y1="18" x2="3.01" y2="18" />
+              </svg>
               SUGGESTED SEQUENCE
             </span>
           </div>
@@ -193,7 +242,10 @@
         <div class="console-panel" id="desktop-inspector">
           <div class="console-panel-head">
             <span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+              </svg>
               ACTIVE SETUP CONTINUITY
             </span>
           </div>
@@ -203,18 +255,22 @@
                 <span class="active-setup-code" id="inspector-code">SELECT SHOT</span>
                 <span class="tag-badge" id="inspector-dept">STANDBY</span>
               </div>
-              <div class="active-setup-title" id="inspector-title">Click any shot in the center shot list to inspect takes and record continuity notes.</div>
+              <div class="active-setup-title" id="inspector-title">Click any shot in the center shot list to inspect
+                takes and record continuity notes.</div>
               <div class="slate-field-lbl" style="margin-top:4px;">TAKES RECORDED</div>
               <div class="active-takes-container" id="inspector-takes">
-                <div style="font-family:var(--font-mono);font-size:11px;color:var(--ink-tertiary);">No setup selected.</div>
+                <div style="font-family:var(--font-mono);font-size:11px;color:var(--ink-tertiary);">No setup selected.
+                </div>
               </div>
               <div class="active-setup-actions">
                 <button class="btn-engraved" id="inspector-btn-add" type="button" disabled>+ LOG TAKE</button>
                 <button class="btn-engraved active" id="inspector-btn-hero" type="button" disabled>⭐ HERO TAKE</button>
               </div>
               <div class="slate-field-lbl" style="margin-top:6px;">DIRECTOR / DIT NOTES</div>
-              <textarea class="active-setup-notes-area" id="inspector-notes" rows="3" placeholder="Enter notes for post-production..." disabled></textarea>
-              <button class="btn-engraved" id="inspector-btn-save-note" type="button" style="align-self:flex-end;margin-top:2px;" disabled>SAVE NOTE</button>
+              <textarea class="active-setup-notes-area" id="inspector-notes" rows="3"
+                placeholder="Enter notes for post-production..." disabled></textarea>
+              <button class="btn-engraved" id="inspector-btn-save-note" type="button"
+                style="align-self:flex-end;margin-top:2px;" disabled>SAVE NOTE</button>
             </div>
           </div>
         </div>
@@ -222,17 +278,25 @@
         <div class="console-panel">
           <div class="console-panel-head">
             <span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+              </svg>
               LIVE CREW ACTIVITY
             </span>
           </div>
-          <div class="console-panel-body" style="padding:8px;max-height:220px;overflow-y:auto;" id="desktop-activity-list"></div>
+          <div class="console-panel-body" style="padding:8px;max-height:220px;overflow-y:auto;"
+            id="desktop-activity-list"></div>
         </div>
 
         <div class="console-panel">
           <div class="console-panel-head">
             <span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7" />
+                <rect x="14" y="3" width="7" height="7" />
+                <rect x="14" y="14" width="7" height="7" />
+                <rect x="3" y="14" width="7" height="7" />
+              </svg>
               ON-SET CREW QR CODE
             </span>
           </div>
@@ -262,11 +326,16 @@
     <div class="modal-box">
       <div class="modal-header">
         <div class="modal-title">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
+          </svg>
           <span>WIRELESS CREW SYNC &bull; BROADCAST SLATE</span>
         </div>
         <button class="btn-shot-action" id="sync-modal-close" type="button">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
         </button>
       </div>
       <div class="modal-body">
@@ -314,18 +383,27 @@
     <div class="modal-box">
       <div class="modal-header">
         <div class="modal-title">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+          </svg>
           <span id="take-modal-title">CLAPPER SLATE &bull; SHOT CONTINUITY</span>
         </div>
         <button class="btn-shot-action" id="take-modal-close" type="button">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
         </button>
       </div>
       <div class="modal-body">
-        <div id="take-modal-desc" style="font-family:var(--font-mono);font-size:13px;color:var(--ink-primary);line-height:1.45;background:var(--bg-slate);padding:10px 14px;border-radius:var(--radius-sharp);border-left:3px solid var(--cine-amber);"></div>
+        <div id="take-modal-desc"
+          style="font-family:var(--font-mono);font-size:13px;color:var(--ink-primary);line-height:1.45;background:var(--bg-slate);padding:10px 14px;border-radius:var(--radius-sharp);border-left:3px solid var(--cine-amber);">
+        </div>
         <div>
           <label class="slate-field-lbl">CONTINUITY TAKES LOGGED</label>
-          <div id="take-modal-list" style="display:flex;flex-direction:column;gap:5px;max-height:150px;overflow-y:auto;"></div>
+          <div id="take-modal-list"
+            style="display:flex;flex-direction:column;gap:5px;max-height:150px;overflow-y:auto;"></div>
           <div style="display:flex;gap:6px;margin-top:10px;">
             <button class="btn-engraved" id="take-modal-add" type="button">+ LOG TAKE</button>
             <button class="btn-engraved active" id="take-modal-add-hero" type="button">⭐ MARK HERO TAKE</button>
@@ -333,11 +411,14 @@
         </div>
         <div>
           <label class="slate-field-lbl" for="take-modal-note">DIRECTOR / DIT CONTINUITY NOTES</label>
-          <textarea id="take-modal-note" class="slate-input" rows="3" placeholder="Technical notes for editor (e.g. good bloom, focus locked on Jensen reveal)..."></textarea>
+          <textarea id="take-modal-note" class="slate-input" rows="3"
+            placeholder="Technical notes for editor (e.g. good bloom, focus locked on Jensen reveal)..."></textarea>
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn-engraved" id="take-modal-save-note" type="button" style="background:var(--cine-cyan);color:#0b0d0f;border-color:var(--cine-cyan);font-weight:700;">SAVE NOTE</button>
+        <button class="btn-engraved" id="take-modal-save-note" type="button"
+          style="background:var(--cine-cyan);color:#0b0d0f;border-color:var(--cine-cyan);font-weight:700;">SAVE
+          NOTE</button>
       </div>
     </div>
   </div>
@@ -345,8 +426,12 @@
   <div class="modal-backdrop" id="search-modal">
     <div class="modal-box search-modal-box">
       <div class="search-viewfinder">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" id="search-input" placeholder="SEARCH SHOT (e.g. 3.7), PROP, GEAR, SCRIPT CUE..." autocomplete="off">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+        <input type="text" id="search-input" placeholder="SEARCH SHOT (e.g. 3.7), PROP, GEAR, SCRIPT CUE..."
+          autocomplete="off">
       </div>
       <div class="search-results-list" id="search-results"></div>
     </div>
@@ -355,11 +440,16 @@
   <aside class="drawer" id="activity-drawer">
     <div class="drawer-header">
       <div class="modal-title">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+        </svg>
         <span>CREW TALLY AUDIT STREAM</span>
       </div>
       <button class="btn-shot-action" id="activity-drawer-close" type="button">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
       </button>
     </div>
     <div class="drawer-body" id="activity-list"></div>
@@ -374,4 +464,5 @@
   <script src="data.js"></script>
   <script src="app.js"></script>
 </body>
+
 </html>
