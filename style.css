@@ -510,7 +510,16 @@ h1.slate-title {
 .dept-pill.active {
   background: var(--ink-primary);
   color: var(--bg-slate);
-  border-color: var(--ink-primary);
+  border-  color: var(--ink-primary);
+}
+
+.shot-detail {
+  display: block;
+  margin-top: 4px;
+  color: var(--ink-secondary);
+  font-size: 11px;
+  line-height: 1.5;
+  user-select: text;
 }
 
 .slate-sub-tools {
@@ -923,6 +932,179 @@ h1.slate-title {
 
 .prep-details {
   color: var(--ink-secondary);
+}
+
+.lighting-plan-card > summary {
+  border-left-color: var(--cine-amber);
+}
+
+.lighting-plan-card > summary .card-heading {
+  color: var(--cine-amber);
+}
+
+.lighting-plan-notice {
+  padding: 12px 16px;
+  background: var(--cine-amber-glow);
+  border-bottom: 1px solid var(--cine-amber-dim);
+  color: var(--ink-primary);
+  font: 600 11px/1.55 var(--font-mono);
+  letter-spacing: 0.01em;
+}
+
+.lighting-scene-plan {
+  padding: 18px 16px 20px;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.lighting-scene-plan:last-child {
+  border-bottom: 0;
+}
+
+.lighting-scene-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lighting-scene-heading h3 {
+  color: var(--ink-primary);
+  font: 700 18px/1.2 var(--font-display);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.lighting-scene-intent {
+  margin: 8px 0 14px;
+  color: var(--ink-secondary);
+}
+
+.lighting-setup-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.lighting-setup-block {
+  padding: 12px 14px;
+  background: var(--bg-surface);
+  border: 1px solid var(--line-hair);
+  border-left: 3px solid var(--cine-amber-dim);
+  border-radius: var(--radius-sharp);
+}
+
+.lighting-setup-block h4 {
+  margin-bottom: 7px;
+  color: var(--cine-amber);
+  font: 700 11px/1.4 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lighting-setup-block ul {
+  display: grid;
+  gap: 6px;
+  padding-left: 17px;
+  color: var(--ink-secondary);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.lighting-diagram-figure {
+  margin-top: 12px;
+  padding: 10px 12px 6px;
+  background: var(--bg-surface);
+  border: 1px solid var(--line-hair);
+  border-radius: var(--radius-sharp);
+}
+
+.lighting-diagram-title {
+  margin: 0 0 6px;
+  color: var(--ink-primary);
+  font: 700 10px/1.4 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lighting-diagram-svg {
+  display: block;
+  width: 100%;
+  min-width: 620px;
+  height: auto;
+}
+
+.lighting-diagram-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.lighting-zone {
+  fill: var(--bg-panel);
+  stroke: var(--line-strong);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 4;
+}
+
+.lighting-zone-label,
+.lighting-divider-label {
+  fill: var(--ink-tertiary);
+  font: 700 10px var(--font-mono);
+  letter-spacing: 0.08em;
+}
+
+.lighting-divider {
+  stroke: var(--cine-cyan);
+  stroke-width: 2;
+  stroke-dasharray: 4 3;
+}
+
+.lighting-beam {
+  stroke: var(--cine-amber);
+  stroke-width: 2;
+  stroke-dasharray: 7 4;
+}
+
+.lighting-arrowhead {
+  fill: var(--cine-amber);
+}
+
+.lighting-node rect {
+  fill: var(--bg-elevated);
+  stroke: var(--line-strong);
+  stroke-width: 1.5;
+}
+
+.lighting-node-light rect,
+.lighting-node-practical rect {
+  stroke: var(--cine-amber);
+}
+
+.lighting-node-subject rect,
+.lighting-node-surface rect,
+.lighting-node-atmosphere rect {
+  stroke: var(--cine-cyan);
+}
+
+.lighting-node-camera rect {
+  stroke: var(--tally-red);
+}
+
+.lighting-node-negative rect {
+  fill: #101113;
+  stroke: var(--ink-tertiary);
+}
+
+.lighting-node-label {
+  fill: var(--ink-primary);
+  font: 700 12px var(--font-mono);
+  letter-spacing: 0.015em;
+}
+
+.lighting-diagram-note {
+  color: var(--ink-tertiary);
+  font: 9px/1.4 var(--font-mono);
+  text-align: right;
 }
 
 .shot-list {
@@ -1888,5 +2070,43 @@ h1.slate-title {
   }
   .tally-box {
     border: 1.5px solid #000000 !important;
+  }
+  .lighting-plan-notice,
+  .lighting-setup-block,
+  .lighting-diagram-figure {
+    background: #ffffff !important;
+    color: #000000 !important;
+    border-color: #444444 !important;
+  }
+  .lighting-scene-heading h3,
+  .lighting-scene-intent,
+  .lighting-setup-block ul,
+  .lighting-setup-block h4,
+  .lighting-diagram-title,
+  .lighting-diagram-note {
+    color: #000000 !important;
+  }
+  .lighting-zone,
+  .lighting-node rect {
+    fill: #ffffff !important;
+    stroke: #333333 !important;
+  }
+  .lighting-zone-label,
+  .lighting-divider-label,
+  .lighting-node-label {
+    fill: #000000 !important;
+  }
+  .lighting-divider,
+  .lighting-beam {
+    stroke: #000000 !important;
+  }
+  .lighting-arrowhead {
+    fill: #000000 !important;
+  }
+  .lighting-diagram-scroll {
+    overflow: visible !important;
+  }
+  .lighting-diagram-svg {
+    min-width: 0 !important;
   }
 }

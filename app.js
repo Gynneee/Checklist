@@ -338,6 +338,7 @@ function buildSearchIndex() {
           secTitle: sec.title,
           code: parsed.code,
           text: parsed.text,
+          details: itemObj.details || "",
           dept: itemObj.dept || sec.dept || "production"
         });
       });
@@ -429,7 +430,8 @@ function renderTabs() {
     gear: "02",
     day: "03",
     scenes: "04",
-    wrap: "05"
+    lighting: "05",
+    wrap: "06"
   };
 
   CHECKLIST_DATA.forEach((phase) => {
@@ -547,7 +549,7 @@ function switchPhase(phaseId) {
   const phaseLabel = document.getElementById("phase-controls-current");
   const phase = CHECKLIST_DATA.find((item) => item.id === phaseId);
   if (phaseLabel && phase) {
-    const phasePrefixes = { prep: "01", gear: "02", day: "03", scenes: "04", wrap: "05" };
+    const phasePrefixes = { prep: "01", gear: "02", day: "03", scenes: "04", lighting: "05", wrap: "06" };
     phaseLabel.textContent = `${phasePrefixes[phase.id] || ""} ${phase.label}`.trim();
   }
   if (phaseControls && window.matchMedia("(max-width: 1280px)").matches) {
@@ -638,6 +640,230 @@ function updateDesktopInspector() {
   updateIpadDock();
 }
 
+function appendSvgElement(parent, name, attributes, text) {
+  const element = document.createElementNS("http://www.w3.org/2000/svg", name);
+  Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, value));
+  if (text !== undefined) element.textContent = text;
+  parent.appendChild(element);
+  return element;
+}
+
+function renderLightingDiagram(diagram, id) {
+  const figure = document.createElement("figure");
+  figure.className = "lighting-diagram-figure";
+
+  const heading = document.createElement("figcaption");
+  heading.className = "lighting-diagram-title";
+  heading.textContent = diagram.title;
+  figure.appendChild(heading);
+
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.classList.add("lighting-diagram-svg");
+  svg.setAttribute("viewBox", "0 0 760 360");
+  svg.setAttribute("role", "img");
+  svg.setAttribute("aria-labelledby", `${id}-title ${id}-description`);
+
+  appendSvgElement(svg, "title", { id: `${id}-title` }, diagram.title);
+  appendSvgElement(
+    svg,
+    "desc",
+    { id: `${id}-description` },
+    "Schematic lighting plan. Arrows show light or beam direction; layout is not to scale."
+  );
+
+  const defs = appendSvgElement(svg, "defs", {});
+  const marker = appendSvgElement(defs, "marker", {
+    id: `${id}-arrow`,
+    viewBox: "0 0 10 10",
+    refX: "8",
+    refY: "5",
+    markerWidth: "6",
+    markerHeight: "6",
+    orient: "auto-start-reverse"
+  });
+  appendSvgElement(marker, "path", { d: "M 0 0 L 10 5 L 0 10 z", class: "lighting-arrowhead" });
+
+  diagram.zones.forEach((zone) => {
+    appendSvgElement(svg, "rect", {
+      x: zone.x,
+      y: zone.y,
+      width: zone.width,
+      height: zone.height,
+      rx: "5",
+      class: "lighting-zone"
+    });
+    appendSvgElement(svg, "text", {
+      x: zone.x + 10,
+      y: zone.y + 17,
+      class: "lighting-zone-label"
+    }, zone.label);
+  });
+
+  diagram.dividers.forEach((divider) => {
+    appendSvgElement(svg, "line", {
+      x1: divider.x1,
+      y1: divider.y1,
+      x2: divider.x2,
+      y2: divider.y2,
+      class: "lighting-divider"
+    });
+    appendSvgElement(svg, "text", {
+      x: divider.x1 + 6,
+      y: divider.y1 - 5,
+      class: "lighting-divider-label"
+    }, divider.label);
+  });
+
+  const nodeById = new Map(diagram.nodes.map((node) => [node.id, node]));
+  diagram.links.forEach((link) => {
+    const from = nodeById.get(link.from);
+    const to = nodeById.get(link.to);
+    if (!from || !to) throw new Error(`Unknown lighting diagram link: ${link.from} -> ${link.to}`);
+    const dx = to.x - from.x;
+    const dy = to.y - from.y;
+    const scale = Math.min(73 / Math.abs(dx || 73), 28 / Math.abs(dy || 28));
+    appendSvgElement(svg, "line", {
+      x1: from.x + dx * scale,
+      y1: from.y + dy * scale,
+      x2: to.x - dx * scale,
+      y2: to.y - dy * scale,
+      class: "lighting-beam",
+      "marker-end": `url(#${id}-arrow)`
+    });
+  });
+
+  diagram.nodes.forEach((node) => {
+    const group = appendSvgElement(svg, "g", {
+      class: `lighting-node lighting-node-${node.kind}`,
+      "aria-label": node.label.join(", ")
+    });
+    appendSvgElement(group, "rect", {
+      x: node.x - 73,
+      y: node.y - 28,
+      width: "146",
+      height: "56",
+      rx: "5"
+    });
+    const text = appendSvgElement(group, "text", {
+      x: node.x,
+      y: node.y - ((node.label.length - 1) * 7),
+      class: "lighting-node-label",
+        "text-anchor": "middle",
+        "dominant-baseline": "middle"
+    });
+    node.label.forEach((line, index) => {
+      const tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+      tspan.setAttribute("x", node.x);
+      tspan.setAttribute("dy", index === 0 ? "0" : "14");
+      tspan.textContent = line;
+      text.appendChild(tspan);
+    });
+    group.appendChild(text);
+  });
+
+  const diagramScroll = document.createElement("div");
+  diagramScroll.className = "lighting-diagram-scroll";
+  diagramScroll.setAttribute("role", "region");
+  diagramScroll.setAttribute("tabindex", "0");
+  diagramScroll.setAttribute("aria-label", `${diagram.title}. Scroll horizontally to inspect the full schematic.`);
+  diagramScroll.appendChild(svg);
+  figure.appendChild(diagramScroll);
+  const note = document.createElement("p");
+  note.className = "lighting-diagram-note";
+  note.textContent = "Amber = light; teal = subject/surface; red = camera. Arrows show beam direction only. Schematic - not to scale. Scroll horizontally on narrow screens.";
+  figure.appendChild(note);
+  return figure;
+}
+
+function renderLightingPlans(main, plans) {
+  const card = document.createElement("details");
+  card.className = "cine-card lighting-plan-card";
+  card.id = "scene-lighting-plan";
+  card.open = true;
+
+  const summary = document.createElement("summary");
+  const titleGroup = document.createElement("div");
+  titleGroup.className = "card-title-group";
+  const badge = document.createElement("span");
+  badge.className = "scene-num-badge";
+  badge.textContent = "G&E";
+  titleGroup.appendChild(badge);
+  const heading = document.createElement("h2");
+  heading.className = "card-heading";
+  heading.textContent = "SCENE LIGHTING PLAN";
+  titleGroup.appendChild(heading);
+  summary.appendChild(titleGroup);
+
+  const meta = document.createElement("div");
+  meta.className = "card-meta-right";
+  const count = document.createElement("span");
+  count.className = "shot-counter-pill";
+  count.textContent = `${plans.length} SCENES`;
+  meta.appendChild(count);
+  const chevron = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  chevron.setAttribute("viewBox", "0 0 24 24");
+  chevron.setAttribute("fill", "none");
+  chevron.setAttribute("stroke", "currentColor");
+  chevron.setAttribute("stroke-width", "2.5");
+  chevron.classList.add("chevron-arrow");
+  appendSvgElement(chevron, "path", { d: "M6 9l6 6 6-6" });
+  meta.appendChild(chevron);
+  summary.appendChild(meta);
+  card.appendChild(summary);
+
+  const notice = document.createElement("div");
+  notice.className = "lighting-plan-notice";
+  notice.textContent = "REFERENCE SETUPS - NOT MEASURED GUARANTEES. Diagrams are schematic and not to scale. Dimmer percentages are starting points only; actual output changes with the fixture, modifier, distance, power and room. Confirm exposure with the camera's configured picture profile and waveform/meter. Verify flicker, color temperature, safe rigging, location permission and fog/strobe procedures on set.";
+  card.appendChild(notice);
+
+  plans.forEach((plan, planIndex) => {
+    const scene = document.createElement("section");
+    scene.className = "lighting-scene-plan";
+
+    const sceneHeading = document.createElement("div");
+    sceneHeading.className = "lighting-scene-heading";
+    const sceneTag = document.createElement("span");
+    sceneTag.className = "scene-num-badge";
+    sceneTag.textContent = plan.scene.toUpperCase();
+    sceneHeading.appendChild(sceneTag);
+    const sceneTitle = document.createElement("h3");
+    sceneTitle.textContent = plan.title;
+    sceneHeading.appendChild(sceneTitle);
+    scene.appendChild(sceneHeading);
+
+    const intent = document.createElement("p");
+    intent.className = "lighting-scene-intent";
+    intent.textContent = plan.intent;
+    scene.appendChild(intent);
+
+    const setupList = document.createElement("div");
+    setupList.className = "lighting-setup-list";
+    plan.setups.forEach((setup) => {
+      const setupBlock = document.createElement("section");
+      setupBlock.className = "lighting-setup-block";
+      const setupHeading = document.createElement("h4");
+      setupHeading.textContent = setup.name;
+      setupBlock.appendChild(setupHeading);
+      const details = document.createElement("ul");
+      setup.details.forEach((detail) => {
+        const item = document.createElement("li");
+        item.textContent = detail;
+        details.appendChild(item);
+      });
+      setupBlock.appendChild(details);
+      setupList.appendChild(setupBlock);
+    });
+    scene.appendChild(setupList);
+
+    plan.diagrams.forEach((diagram, diagramIndex) => {
+      scene.appendChild(renderLightingDiagram(diagram, `lighting-${planIndex}-${diagramIndex}`));
+    });
+    card.appendChild(scene);
+  });
+
+  main.appendChild(card);
+}
+
 function renderMain() {
   const main = document.getElementById("main");
   if (!main) return;
@@ -714,6 +940,13 @@ function renderMain() {
 
     card.appendChild(list);
     main.appendChild(card);
+  }
+
+  const lightingPlans = phase.lightingPlanFor
+    ? CHECKLIST_DATA.find((item) => item.id === phase.lightingPlanFor)?.lightingPlans
+    : null;
+  if (lightingPlans) {
+    renderLightingPlans(main, lightingPlans);
   }
 
   phase.sections.forEach((sec) => {
@@ -814,6 +1047,13 @@ function renderMain() {
       txt.className = "shot-text";
       txt.textContent = parsed.text;
       content.appendChild(txt);
+
+      if (itemObj.details) {
+        const detail = document.createElement("span");
+        detail.className = "shot-detail";
+        detail.textContent = itemObj.details;
+        content.appendChild(detail);
+      }
 
       const badges = document.createElement("div");
       badges.className = "shot-tags";
@@ -1294,7 +1534,7 @@ function renderSearchResults(query) {
   container.innerHTML = "";
 
   const q = query.trim().toLowerCase();
-  const results = q ? searchIndex.filter((it) => it.text.toLowerCase().includes(q) || it.code.toLowerCase().includes(q) || it.secTitle.toLowerCase().includes(q) || it.dept.toLowerCase().includes(q)) : searchIndex.slice(0, 25);
+  const results = q ? searchIndex.filter((it) => it.text.toLowerCase().includes(q) || it.details.toLowerCase().includes(q) || it.code.toLowerCase().includes(q) || it.secTitle.toLowerCase().includes(q) || it.dept.toLowerCase().includes(q)) : searchIndex.slice(0, 25);
 
   if (results.length === 0) {
     container.innerHTML = `<div style="text-align:center;padding:24px;color:var(--ink-tertiary);font-family:var(--font-mono);font-size:12px;">NO CUES MATCHING "${query}"</div>`;
@@ -1667,7 +1907,7 @@ function initApp() {
   const initialPhase = CHECKLIST_DATA.find((phase) => phase.id === currentPhase);
   const phaseLabel = document.getElementById("phase-controls-current");
   if (phaseLabel && initialPhase) {
-    const phasePrefixes = { prep: "01", gear: "02", day: "03", scenes: "04", wrap: "05" };
+    const phasePrefixes = { prep: "01", gear: "02", day: "03", scenes: "04", lighting: "05", wrap: "06" };
     phaseLabel.textContent = `${phasePrefixes[initialPhase.id] || ""} ${initialPhase.label}`.trim();
   }
   renderDeptFilters();
